@@ -287,6 +287,7 @@ bool NativeWindow::IsClosed() const {
 }
 
 void NativeWindow::SetSize(const gfx::Size& size, bool animate) {
+  LOG(INFO) << "SetSize: " << size.ToString();
   SetBounds(gfx::Rect(GetPosition(), size), animate);
 }
 
@@ -303,6 +304,7 @@ gfx::Point NativeWindow::GetPosition() const {
 }
 
 void NativeWindow::SetContentSize(const gfx::Size& size, bool animate) {
+  LOG(INFO) << "SetContentSize: " << size.ToString();
   SetSize(ContentBoundsToWindowBounds(gfx::Rect(size)).size(), animate);
 }
 

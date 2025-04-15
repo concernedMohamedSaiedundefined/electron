@@ -267,6 +267,8 @@ NativeWindowViews::NativeWindowViews(const gin_helper::Dictionary& options,
   gfx::Rect bounds(0, 0, width, height);
   widget_size_ = bounds.size();
 
+  LOG(INFO) << "width: " << width << " - height: " << height << " " << __LINE__;
+
   widget()->AddObserver(this);
 
   using InitParams = views::Widget::InitParams;
@@ -828,6 +830,8 @@ bool NativeWindowViews::IsFullscreen() const {
 }
 
 void NativeWindowViews::SetBounds(const gfx::Rect& bounds, bool animate) {
+  LOG(INFO) << "SetBounds: " << bounds.ToString() << " " << __LINE__;
+
 #if BUILDFLAG(IS_WIN)
   if (is_moving_ || is_resizing_) {
     pending_bounds_change_ = bounds;

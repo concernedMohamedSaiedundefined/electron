@@ -32,6 +32,19 @@ BrowserWindow::BrowserWindow(gin::Arguments* args,
   auto web_preferences = gin_helper::Dictionary::CreateEmpty(isolate);
   options.Get(options::kWebPreferences, &web_preferences);
 
+  int inner_width = 0;
+  int inner_height = 0;
+  options.Get(options::kinnerWidth, &inner_width);
+  options.Get(options::kinnerHeight, &inner_height);
+
+  if (inner_width || inner_height) {
+    if (inner_width <= 0)
+      inner_width = 300;
+    if (inner_height <= 0)
+      inner_height = 300;
+    window()->SetContentSize(gfx::Size(inner_width, inner_height));
+  }
+
   // Copy the backgroundColor to webContents.
   std::string color;
   if (options.Get(options::kBackgroundColor, &color)) {
@@ -203,6 +216,7 @@ void BrowserWindow::OnWindowLeaveFullScreen() {
 
 void BrowserWindow::UpdateWindowControlsOverlay(
     const gfx::Rect& bounding_rect) {
+  LOG(INFO) << "UpdateWindowControlsOverlay: " << bounding_rect.ToString();
   web_contents()->UpdateWindowControlsOverlay(bounding_rect);
 }
 
